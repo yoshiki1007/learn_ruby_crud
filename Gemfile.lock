@@ -2,6 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     pg (1.5.3)
+    webrick (1.8.1)
 
 PLATFORMS
   -darwin-20
@@ -9,6 +10,7 @@ PLATFORMS
 
 DEPENDENCIES
   pg
+  webrick
 
 BUNDLED WITH
    2.3.14
