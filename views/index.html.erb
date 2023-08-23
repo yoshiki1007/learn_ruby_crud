@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Memo List</title>
+</head>
+<body>
+<h1>Memo List</h1>
+<ul>
+  <% memos.each do |memo| %>
+    <li>ID: <%= memo[:id] %>, Name: <%= memo[:name] %>, Content: <%= memo[:content] %></li>
+  <% end %>
+</ul>
+</body>
+</html>
