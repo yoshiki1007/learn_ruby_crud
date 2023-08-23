@@ -24,8 +24,20 @@ docker-compose down --rmi all --volumes --remove-orphans
 docker-compose exec app bash
 ```
 
+webサーバーを起動
+
+```zsh
+ruby main.rb
+```
+
 DBコンテナに入る
 
 ```zsh
 docker-compose exec db psql -U postgres
+```
+
+memo テーブルを見る
+
+```zsh
+select * from memo
 ```
