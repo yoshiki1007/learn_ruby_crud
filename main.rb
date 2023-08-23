@@ -4,15 +4,10 @@ require './models/memo'
 
 server = WEBrick::HTTPServer.new(Port: 3000)
 
-# メモ一覧を格納する配列（仮のデータ）
-memos = [
-  { id: 1, name: 'Memo 1', content: 'Content 1' },
-  { id: 2, name: 'Memo 2', content: 'Content 2' }
-]
-
-# ERBテンプレートの読み込み
-
 server.mount_proc '/' do |req, res|
+  # メモ一覧を格納する配列（仮のデータ）
+  memos = Memo.all
+
   template = ERB.new(File.read('views/index.html.erb'))
 
   case req.request_method
