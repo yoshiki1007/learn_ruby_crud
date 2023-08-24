@@ -1,7 +1,8 @@
 require 'pg'
+require_relative '../config'
 
 # データベースに接続
-conn = PG.connect(dbname: 'postgres', user: 'postgres', password: 'example', host: 'db')
+conn = PG.connect(dbname: Config::DB_NAME, user: Config::DB_USER, password: Config::DB_PASS, host: Config::DB_HOST)
 
 # テーブルを作成するSQLコード
 create_table_sql = <<~SQL
@@ -17,3 +18,5 @@ conn.exec(create_table_sql)
 
 # データベース接続を閉じる
 conn.close
+
+puts "Created table 'memo'"
