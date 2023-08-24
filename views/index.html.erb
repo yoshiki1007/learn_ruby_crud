@@ -1,20 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Memo List</title>
+  <title>Memo Lists</title>
+  <style>
+    .memo {
+      border: 1px solid #333;
+      padding: 24px;
+      margin-bottom: 16px;
+      border-radius: 24px;
+    }
+  </style>
 </head>
 
 <body>
-<h1>Memo List</h1>
-<ul>
+<h1>Memo Lists</h1>
+<section>
   <% unless memos.empty? %>
     <% memos.each do |memo| %>
-      <li>ID: <%= memo[:id] %>, Name: <%= memo[:name] %>, Content: <%= memo[:content] %></li>
+      <div class="memo">
+        <p>ID: <%= memo[:id] %></p>
+        <p>Name: <%= memo[:name] %></p>
+        <p>Content: <%= memo[:content] %></p>
+        <p><a href="/memos/<%= memo[:id] %>">Show details</a></p>
+      </div>
     <% end %>
   <% else %>
-    <li>There is no memo.</li>
+    <p>There is no memo.</p>
   <% end %>
-</ul>
+</section>
 <a href="/new">Create a New Memo</a>
 </body>
 </html>
