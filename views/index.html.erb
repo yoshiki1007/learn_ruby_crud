@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
   <title>Memo Lists</title>
   <style>
@@ -15,8 +15,8 @@
 <body>
 <h1>Memo Lists</h1>
 <section>
-  <% unless memos.empty? %>
-    <% memos.each do |memo| %>
+  <% if @memos.any? %>
+    <% @memos.each do |memo| %>
       <div class="memo">
         <p>ID: <%= memo[:id] %></p>
         <p>Name: <%= memo[:name] %></p>

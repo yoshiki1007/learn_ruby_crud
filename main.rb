@@ -5,7 +5,7 @@ require './models/memo'
 server = WEBrick::HTTPServer.new(Port: 3000)
 
 server.mount_proc '/' do |req, res|
-  memos = Memo.all
+  @memos = Memo.all
 
   template = ERB.new(File.read('views/index.html.erb'))
 
@@ -36,7 +36,7 @@ end
 server.mount_proc '/memos' do |req, res|
   memo_id = req.path.split('/').last.to_i
 
-  memo = Memo.find(id: memo_id)
+  @memo = Memo.find(id: memo_id)
 
   template = ERB.new(File.read('views/show.html.erb'))
 
