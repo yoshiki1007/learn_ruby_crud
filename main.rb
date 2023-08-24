@@ -33,6 +33,22 @@ server.mount_proc '/new' do |req, res|
   end
 end
 
+server.mount_proc '/memos' do |req, res|
+  memo_id = req.path.split('/').last.to_i
+
+  memo = Memo.find(id: memo_id)
+
+  template = ERB.new(File.read('views/show.html.erb'))
+
+  case req.request_method
+  when 'GET'
+    html = template.result(binding)
+    res.body = html
+  else
+    res.set_redirect(WEBrick::HTTPStatus::Found, '/')
+  end
+end
+
 trap 'INT' do
   server.shutdown
 end

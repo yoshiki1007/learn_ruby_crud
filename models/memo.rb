@@ -35,6 +35,21 @@ class Memo
       end
     end
 
+    def find(id:)
+      conn = PG.connect(dbname: Config::DB_NAME, user: Config::DB_USER, password: Config::DB_PASS, host: Config::DB_HOST)
+
+      select_memos_sql = "SELECT * FROM memo WHERE id = $1"
+      result = conn.exec_params(select_memos_sql, [id])
+
+      conn.close
+
+      {
+        id: result[0]['id'],
+        name: result[0]['name'],
+        content: result[0]['content']
+      }
+    end
+
     def create(name:, content:)
       conn = PG.connect(dbname: Config::DB_NAME, user: Config::DB_USER, password: Config::DB_PASS, host: Config::DB_HOST)
 
