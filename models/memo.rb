@@ -54,11 +54,7 @@ class Memo
 
       conn.close
 
-      {
-        id: result[0]['id'],
-        name: result[0]['name'],
-        content: result[0]['content']
-      }
+      new(id: result[0]['id'], name: result[0]['name'], content: result[0]['content'])
     end
 
     def create(name:, content:)

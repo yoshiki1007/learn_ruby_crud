@@ -6,10 +6,13 @@
 
 <body>
 <h1>Memo Details</h1>
-<p>ID: <%= @memo[:id] %></p>
-<p>Name: <%= @memo[:name] %></p>
-<p>Content: <%= @memo[:content] %></p>
-<p><a href="/memos/<%= @memo[:id] %>/edit">Edit</a></p>
+<p>ID: <%= @memo.id %></p>
+<p>Name: <%= @memo.name %></p>
+<p>Content: <%= @memo.content %></p>
+<p><a href="/memos/<%= @memo.id %>/edit">Edit</a></p>
+<form action="/memos/<%= @memo.id %>/destroy" method="post">
+  <button type="submit" value="Delete">Delete</button>
+</form>
 <p><a href="/">Back to Memo List</a></p>
 </body>
 </html>
