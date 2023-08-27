@@ -39,17 +39,13 @@ class Memo
     def all
       conn = PG.connect(dbname: Config::DB_NAME, user: Config::DB_USER, password: Config::DB_PASS, host: Config::DB_HOST)
 
-      select_memos_sql = <<~SQL
-        SELECT * FROM memo;
-      SQL
+      select_memos_sql = "SELECT * FROM memo;"
 
       result = conn.exec(select_memos_sql)
 
       conn.close
 
-      result.map do |row|
-        new(id: row['id'], name: row['name'], content: row['content'])
-      end
+      result.map { |row| new(id: row['id'], name: row['name'], content: row['content']) }
     end
 
     def find(id:)
