@@ -1,21 +1,12 @@
 require 'webrick'
 require 'erb'
 require './models/memo'
+require_relative 'controllers/top'
 
 server = WEBrick::HTTPServer.new(Port: 3000)
 
 server.mount_proc '/' do |req, res|
-  @memos = Memo.all
-
-  template = ERB.new(File.read('views/index.html.erb'))
-
-  case req.request_method
-  when 'GET'
-    html = template.result(binding)
-    res.body = html
-  else
-    res.set_redirect(WEBrick::HTTPStatus::Found, '/')
-  end
+  Controllers::Top.index(req, res)
 end
 
 server.mount_proc '/new' do |req, res|
