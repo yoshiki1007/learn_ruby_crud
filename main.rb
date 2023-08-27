@@ -71,7 +71,7 @@ server.mount_proc '/memos' do |req, res|
       html = template.result(binding)
       res.body = html
     when 'POST'
-      @memo.update(id: req.query['id'], name: req.query['name'], content: req.query['content'])
+      @memo.update(name: req.query['name'], content: req.query['content'])
       res.set_redirect(WEBrick::HTTPStatus::Found, '/')
     else
       res.set_redirect(WEBrick::HTTPStatus::Found, '/')
