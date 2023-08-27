@@ -14,6 +14,20 @@ class Memo
   DB_PASS = 'example'
   DB_HOST = 'db'
 
+  def update(id:, name:, content:)
+    conn = PG.connect(dbname: Config::DB_NAME, user: Config::DB_USER, password: Config::DB_PASS, host: Config::DB_HOST)
+
+    update_memo_sql = <<~SQL
+      UPDATE memo
+      SET name = $1, content = $2
+      WHERE id = $3
+    SQL
+
+    conn.exec_params(update_memo_sql, [name, content, id])
+
+    conn.close
+  end
+
   class << self
     def all
       conn = PG.connect(dbname: Config::DB_NAME, user: Config::DB_USER, password: Config::DB_PASS, host: Config::DB_HOST)

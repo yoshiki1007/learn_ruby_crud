@@ -34,18 +34,36 @@ server.mount_proc '/new' do |req, res|
 end
 
 server.mount_proc '/memos' do |req, res|
-  memo_id = req.path.split('/').last.to_i
+  if (match_data = req.path.match(/\/memos\/(\d+)\/edit/))
+    memo_id = match_data[1].to_i
 
-  @memo = Memo.find(id: memo_id)
+    @memo = Memo.find(id: memo_id)
 
-  template = ERB.new(File.read('views/show.html.erb'))
+    template = ERB.new(File.read('views/edit.html.erb'))
 
-  case req.request_method
-  when 'GET'
-    html = template.result(binding)
-    res.body = html
+    case req.request_method
+    when 'GET'
+      html = template.result(binding)
+      res.body = html
+    else
+      res.set_redirect(WEBrick::HTTPStatus::Found, "/memos/#{memo_id}") # 編集後にメモ詳細ページにリダイレクト
+    end
   else
-    res.set_redirect(WEBrick::HTTPStatus::Found, '/')
+    memo_id = req.path.split('/').last.to_i
+
+    @memo = Memo.find(id: memo_id)
+
+    case req.request_method
+    when 'GET'
+      template = ERB.new(File.read('views/show.html.erb'))
+      html = template.result(binding)
+      res.body = html
+    when 'POST'
+      @memo.update(id: req.query['id'], name: req.query['name'], content: req.query['content'])
+      res.set_redirect(WEBrick::HTTPStatus::Found, '/')
+    else
+      res.set_redirect(WEBrick::HTTPStatus::Found, '/')
+    end
   end
 end
 
