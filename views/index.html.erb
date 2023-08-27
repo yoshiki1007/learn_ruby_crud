@@ -18,10 +18,10 @@
   <% if @memos.any? %>
     <% @memos.each do |memo| %>
       <div class="memo">
-        <p>ID: <%= memo[:id] %></p>
-        <p>Name: <%= memo[:name] %></p>
-        <p>Content: <%= memo[:content] %></p>
-        <p><a href="/memos/<%= memo[:id] %>">Show details</a></p>
+        <p>ID: <%= memo.id %></p>
+        <p>Name: <%= memo.name %></p>
+        <p>Content: <%= memo.content %></p>
+        <p><a href="/memos/<%= memo.id %>">Show details</a></p>
       </div>
     <% end %>
   <% else %>

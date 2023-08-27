@@ -2,9 +2,10 @@ require 'pg'
 require_relative '../db/config'
 
 class Memo
-  attr_accessor :name, :content
+  attr_accessor :id, :name, :content
 
-  def initialize(name, content)
+  def initialize(id: nil, name:, content:)
+    @id = id
     @name = name
     @content = content
   end
@@ -41,11 +42,7 @@ class Memo
       conn.close
 
       result.map do |row|
-        {
-          id: row['id'],
-          name: row['name'],
-          content: row['content']
-        }
+        new(id: row['id'], name: row['name'], content: row['content'])
       end
     end
 
