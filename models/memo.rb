@@ -29,6 +29,16 @@ class Memo
     conn.close
   end
 
+  def destroy
+    conn = PG.connect(dbname: Config::DB_NAME, user: Config::DB_USER, password: Config::DB_PASS, host: Config::DB_HOST)
+
+    delete_memo_sql = "DELETE FROM memo WHERE id = $1"
+
+    conn.exec_params(delete_memo_sql, [self.id])
+
+    conn.close
+  end
+
   class << self
     def all
       conn = PG.connect(dbname: Config::DB_NAME, user: Config::DB_USER, password: Config::DB_PASS, host: Config::DB_HOST)

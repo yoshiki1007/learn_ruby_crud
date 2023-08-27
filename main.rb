@@ -48,6 +48,18 @@ server.mount_proc '/memos' do |req, res|
     else
       res.set_redirect(WEBrick::HTTPStatus::Found, "/memos/#{memo_id}") # 編集後にメモ詳細ページにリダイレクト
     end
+  elsif (match_data = req.path.match(/\/memos\/(\d+)\/destroy/))
+    memo_id = match_data[1].to_i
+
+    @memo = Memo.find(id: memo_id)
+
+    case req.request_method
+    when 'POST'
+      @memo.destroy
+      res.set_redirect(WEBrick::HTTPStatus::Found, '/')
+    else
+      res.set_redirect(WEBrick::HTTPStatus::Found, '/')
+    end
   else
     memo_id = req.path.split('/').last.to_i
 
