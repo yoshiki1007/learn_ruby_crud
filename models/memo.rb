@@ -10,13 +10,8 @@ class Memo
     @content = content
   end
 
-  DB_NAME = 'postgres'
-  DB_USER = 'postgres'
-  DB_PASS = 'example'
-  DB_HOST = 'db'
-
   def update(name:, content:)
-    conn = PG.connect(dbname: Config::DB_NAME, user: Config::DB_USER, password: Config::DB_PASS, host: Config::DB_HOST)
+    conn = DB::Config.connection
 
     update_memo_sql = "UPDATE memo SET name = $1, content = $2 WHERE id = $3"
 
@@ -26,7 +21,7 @@ class Memo
   end
 
   def destroy
-    conn = PG.connect(dbname: Config::DB_NAME, user: Config::DB_USER, password: Config::DB_PASS, host: Config::DB_HOST)
+    conn = DB::Config.connection
 
     delete_memo_sql = "DELETE FROM memo WHERE id = $1"
 
@@ -37,7 +32,7 @@ class Memo
 
   class << self
     def all
-      conn = PG.connect(dbname: Config::DB_NAME, user: Config::DB_USER, password: Config::DB_PASS, host: Config::DB_HOST)
+      conn = DB::Config.connection
 
       select_memos_sql = "SELECT * FROM memo;"
 
@@ -49,7 +44,7 @@ class Memo
     end
 
     def find(id:)
-      conn = PG.connect(dbname: Config::DB_NAME, user: Config::DB_USER, password: Config::DB_PASS, host: Config::DB_HOST)
+      conn = DB::Config.connection
 
       select_memos_sql = "SELECT * FROM memo WHERE id = $1"
       result = conn.exec_params(select_memos_sql, [id])
@@ -60,7 +55,7 @@ class Memo
     end
 
     def create(name:, content:)
-      conn = PG.connect(dbname: Config::DB_NAME, user: Config::DB_USER, password: Config::DB_PASS, host: Config::DB_HOST)
+      conn = DB::Config.connection
 
       insert_sql = "INSERT INTO memo (name, content) VALUES ($1, $2)"
       conn.exec_params(insert_sql, [name, content])
